@@ -1,7 +1,6 @@
 """The only file that sends PlanBee messages to OpenAI."""
 
 import json
-import os
 import re
 import urllib.error
 import urllib.request
@@ -42,7 +41,7 @@ def _answer_text(response):
 
 def plan_tasks(tasks):
     env = _read_env_file()
-    api_key = env.get("OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY")
+    api_key = env.get("OPENAI_API_KEY")
     if not api_key or api_key == "paste-your-key-here":
         raise RuntimeError("missing_key")
 
