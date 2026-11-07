@@ -17,6 +17,7 @@ The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the
 - Added local browser saving.
 - Saves on this computer only for now.
 - Added a warm honey-yellow theme with Gluten, Bpmf Huninn, and Google Material Symbols.
+- Added an optional Rearrange mode so students can move tasks up or down and keep that order locally.
 
 ## Maybe Later
 

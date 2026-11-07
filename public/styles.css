@@ -59,3 +59,11 @@ body { background: var(--cream); color: var(--ink); font-family: "Bpmf Huninn", 
 .result-icon { margin-right: 10px; color: #ae6b12; font-size: 18px; vertical-align: -3px; }
 .close-button { padding: 3px; font-size: 23px; }
 @media (max-width: 760px) { .bee { top: 82px; left: 45px; font-size: 68px; } }
+.panel-actions { display: flex; align-items: center; gap: 8px; }
+.reorder-toggle { display: inline-flex; align-items: center; gap: 4px; border: 1px solid #e4c778; border-radius: 9px; padding: 7px 9px; color: #8b5c18; background: #fff3c7; font-size: 11px; font-weight: 700; }
+.reorder-toggle .material-symbols-outlined { font-size: 16px; }
+.task-actions { display: flex; align-items: center; gap: 5px; }
+.reorder-controls { display: flex; gap: 2px; }
+.move-task { display: grid; place-items: center; width: 25px; height: 25px; border: 0; border-radius: 7px; color: #a46b19; background: #fff0bc; font-size: 16px; }
+.move-task:hover, .reorder-toggle:hover { background: #ffe39a; }
+@media (max-width: 760px) { .panel-actions { align-items: flex-end; flex-direction: column; gap: 5px; } .task-card { grid-template-columns: 17px 1fr auto; } .task-card .task-actions { grid-column: 3; grid-row: 1; } }
