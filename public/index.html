@@ -7,70 +7,70 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bpmf+Huninn&family=Gluten:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="/" aria-label="PlanBee home"><span class="brand-mark">✳</span><span>PlanBee</span></a>
-      <div class="topbar-note"><span class="dot"></span> Your calm study companion</div>
+      <a class="brand" href="/" aria-label="PlanBee home"><span class="brand-mark material-symbols-outlined">hive</span><span>PlanBee</span></a>
     </header>
 
     <main class="shell">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">HOMEWORK, WITHOUT THE LATE NIGHT</p>
-          <h1>Get your work done.<br /><em>Keep your night.</em></h1>
-          <p class="hero-text">PlanBee sorts your homework by urgency and importance, then helps you make a plan that protects your sleep.</p>
-          <button class="primary-button" id="open-planner" type="button"><span>✦</span> Plan with AI</button>
-          <p class="privacy-note">Please don’t enter personal information. PlanBee is for school tasks only.</p>
+          <p class="eyebrow">A CALMER SCHOOL NIGHT STARTS WITH A PLAN</p>
+          <h1>Finish what matters,<br /><em>then let your evening rest.</em></h1>
+          <p class="hero-text">When homework and phone time start pushing bedtime later, a small plan can make the night feel more manageable.</p>
+          <button class="primary-button" id="open-planner" type="button"><span class="material-symbols-outlined">auto_awesome</span> Make my plan</button>
+          <p class="privacy-note">Please enter school tasks only, and leave out names and other personal information.</p>
         </div>
         <div class="hero-visual" aria-label="A bee carrying a moon-shaped plan card">
-          <div class="moon-card"><span class="moon">☾</span><span>Bedtime<br /><strong>12:00 AM</strong></span></div>
-          <div class="bee">🐝</div>
-          <div class="sparkle sparkle-one">✦</div><div class="sparkle sparkle-two">✧</div><div class="sparkle sparkle-three">·</div>
+          <div class="moon-card"><span class="moon material-symbols-outlined">dark_mode</span><span>Bedtime<br /><strong>12:00 AM</strong></span></div>
+          <div class="bee material-symbols-outlined">emoji_nature</div>
+          <div class="sparkle sparkle-one material-symbols-outlined">auto_awesome</div><div class="sparkle sparkle-two material-symbols-outlined">star</div><div class="sparkle sparkle-three material-symbols-outlined">more_horiz</div>
         </div>
       </section>
 
       <section class="dashboard-grid">
         <div class="planner-panel panel">
           <div class="panel-heading">
-            <div><p class="section-label">YOUR PLAN</p><h2>Today’s tasks</h2></div>
+            <div><p class="section-label">YOUR PLAN FOR TONIGHT</p><h2>Today’s tasks</h2></div>
             <span class="saved-pill"><span class="green-dot"></span> Saved locally</span>
           </div>
           <div id="task-list" class="task-list" aria-live="polite"></div>
-          <button class="add-link" id="open-add-task" type="button"><span>＋</span> Add a task</button>
+          <button class="add-link" id="open-add-task" type="button"><span class="material-symbols-outlined">add</span> Add a task</button>
         </div>
 
         <aside class="tips-panel panel">
-          <p class="section-label">SMALL WINS</p>
-          <h2>Keep your brain<br />on your side.</h2>
-          <div class="tip"><span class="tip-icon">◷</span><p><strong>Start with the soonest due date.</strong><br />One clear next step beats a giant list.</p></div>
-          <div class="tip"><span class="tip-icon">☕</span><p><strong>Take a real break.</strong><br />A short reset helps your focus come back.</p></div>
-          <div class="tip"><span class="tip-icon">☾</span><p><strong>Protect midnight.</strong><br />If the pile-up is too big, ask about an extension.</p></div>
+          <p class="section-label">HELPFUL REMINDERS</p>
+          <h2>A few ways to make<br />tonight easier.</h2>
+          <div class="tip"><span class="tip-icon material-symbols-outlined">schedule</span><p><strong>Start with the task due soonest.</strong><br />Choosing one clear next step can make a long list feel manageable.</p></div>
+          <div class="tip"><span class="tip-icon material-symbols-outlined">coffee</span><p><strong>Take a real break.</strong><br />A short reset gives your attention time to come back.</p></div>
+          <div class="tip"><span class="tip-icon material-symbols-outlined">dark_mode</span><p><strong>Protect your bedtime.</strong><br />If the list is too large, ask a teacher or caregiver about an extension.</p></div>
         </aside>
       </section>
 
       <section class="ai-result-section" id="ai-result-section" hidden>
-        <div class="result-heading"><div><p class="section-label">YOUR PLANBEE CHECK-IN</p><h2>Here’s a kinder way through it.</h2></div><span class="ai-badge">✦ AI PLAN</span></div>
+        <div class="result-heading"><div><p class="section-label">A PLAN FOR TONIGHT</p><h2>Here is a way to work through the list.</h2></div><span class="ai-badge"><span class="material-symbols-outlined">auto_awesome</span> AI PLAN</span></div>
         <div class="result-card" id="ai-result" aria-live="polite"></div>
       </section>
 
-      <footer><span>Made for students who want their evenings back.</span><span>PlanBee v1 · local-first</span></footer>
+      <footer><span>Your tasks stay in this browser for now.</span><span>PlanBee</span></footer>
     </main>
 
     <dialog id="planner-dialog" class="planner-dialog">
       <form method="dialog" class="dialog-card" id="task-form">
-        <button class="close-button" type="button" aria-label="Close planner">×</button>
-        <p class="section-label">BUILD YOUR PLAN</p>
+        <button class="close-button material-symbols-outlined" type="button" aria-label="Close planner">close</button>
+        <p class="section-label">START WITH TONIGHT’S TASKS</p>
         <h2>What’s on your plate?</h2>
-        <p class="dialog-help">Add each school task with its due date. Then let PlanBee help you choose what to do first.</p>
+        <p class="dialog-help">Add each school task with its due date, and then ask for help choosing what to do first.</p>
         <label for="task-title">Task</label>
         <input id="task-title" name="title" type="text" maxlength="100" placeholder="e.g. Finish science lab report" required />
         <div class="form-row">
           <div><label for="task-date">Due date</label><input id="task-date" name="dueDate" type="date" required /></div>
           <div><label for="task-importance">Importance</label><select id="task-importance" name="importance"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
         </div>
-        <div class="dialog-actions"><button class="secondary-button" id="add-task" type="submit">＋ Add</button><button class="primary-button" id="ask-ai" type="button">✦ Organize with AI</button></div>
+        <div class="dialog-actions"><button class="secondary-button" id="add-task" type="submit"><span class="material-symbols-outlined">add</span> Add task</button><button class="primary-button" id="ask-ai" type="button"><span class="material-symbols-outlined">auto_awesome</span> Make my plan</button></div>
         <p id="dialog-status" class="dialog-status" role="status"></p>
       </form>
     </dialog>

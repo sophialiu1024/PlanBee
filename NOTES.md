@@ -16,6 +16,7 @@ The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the
 - Added the safety note not to enter personal information.
 - Added local browser saving.
 - Saves on this computer only for now.
+- Added a warm honey-yellow theme with Gluten, Bpmf Huninn, and Google Material Symbols.
 
 ## Maybe Later
 

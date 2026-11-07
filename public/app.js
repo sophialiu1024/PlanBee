@@ -26,7 +26,7 @@
     sortedTasks().forEach((task) => {
       const card = document.createElement("article");
       card.className = "task-card";
-      card.innerHTML = `<div class="task-check" aria-hidden="true"></div><div class="task-info"><h3></h3><p></p></div><span class="priority priority-${task.importance.toLowerCase()}">${task.importance}</span><button class="remove-task" type="button" aria-label="Remove task">×</button>`;
+      card.innerHTML = `<div class="task-check" aria-hidden="true"></div><div class="task-info"><h3></h3><p></p></div><span class="priority priority-${task.importance.toLowerCase()}">${task.importance}</span><button class="remove-task material-symbols-outlined" type="button" aria-label="Remove task">close</button>`;
       card.querySelector("h3").textContent = task.title;
       card.querySelector("p").textContent = `Due ${formatDate(task.dueDate)}`;
       card.querySelector(".remove-task").addEventListener("click", () => {
@@ -58,7 +58,8 @@
     result.innerHTML = "";
     text.split("\n").filter(Boolean).forEach((line) => {
       const item = document.createElement("p");
-      item.textContent = line.replace(/^[-•]\s*/, "");
+      item.innerHTML = `<span class="material-symbols-outlined result-icon">check_circle</span><span></span>`;
+      item.lastElementChild.textContent = line.replace(/^[-•]\s*/, "").replace(/\*\*/g, "");
       result.appendChild(item);
     });
     resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -98,7 +99,7 @@
       status.textContent = error.message || "Please check your key and internet connection.";
     } finally {
       button.disabled = false;
-      button.textContent = "✦ Organize with AI";
+      button.innerHTML = '<span class="material-symbols-outlined">auto_awesome</span> Make my plan';
     }
   });
 
