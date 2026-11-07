@@ -46,9 +46,9 @@ body { background: var(--cream); color: var(--ink); font-family: "Bpmf Huninn", 
 .dialog-card input:focus, .dialog-card select:focus { border-color: #d9a039; box-shadow: 0 0 0 3px #ffefbc; }
 .close-button, .remove-task { color: #a5793d; }
 .material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: normal; font-style: normal; font-size: 1.15em; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-feature-settings: "liga"; -webkit-font-smoothing: antialiased; font-feature-settings: "liga"; font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
-.brand-mark { font-size: 21px; }
+.brand-mark { display: grid; place-items: center; width: 31px; height: 31px; padding: 0; font-size: 21px; line-height: 1; }
 .primary-button .material-symbols-outlined, .secondary-button .material-symbols-outlined, .ai-badge .material-symbols-outlined { vertical-align: -3px; }
-.bee { font-size: 84px; color: #5a3617; }
+.bee { top: 158px; left: 58px; color: #ae6b12; font-size: 100px; transform: rotate(13deg) scaleX(-1); }
 .moon { display: grid; place-items: center; flex: 0 0 48px; width: 48px; height: 48px; padding: 0; font-size: 30px; line-height: 1; }
 .tip-icon { font-size: 21px; }
 .sparkle { font-size: 28px; }
@@ -58,3 +58,4 @@ body { background: var(--cream); color: var(--ink); font-family: "Bpmf Huninn", 
 .result-card p::before { content: none; }
 .result-icon { margin-right: 10px; color: #ae6b12; font-size: 18px; vertical-align: -3px; }
 .close-button { padding: 3px; font-size: 23px; }
+@media (max-width: 760px) { .bee { top: 82px; left: 45px; font-size: 68px; } }
