@@ -41,12 +41,16 @@
   function openDialog() {
     status.textContent = "";
     if (!dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
-    dialog.showModal();
+    if (!dialog.open) {
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else dialog.setAttribute("open", "");
+    }
     titleInput.focus();
   }
 
   function closeDialog() {
-    dialog.close();
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
   }
 
   function showResult(text) {
@@ -62,6 +66,7 @@
 
   document.querySelector("#open-planner").addEventListener("click", openDialog);
   document.querySelector("#open-add-task").addEventListener("click", openDialog);
+  document.querySelector(".close-button").addEventListener("click", closeDialog);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
