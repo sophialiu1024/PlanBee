@@ -53,7 +53,7 @@ def plan_tasks(tasks):
     user_message = (
         "Organize these student tasks into a short, practical plan. "
         "Return 3-6 concise bullets. Put the most urgent and important work first. "
-        "Include one realistic break suggestion. If the workload would push bedtime past midnight, "
+        "Include one realistic break suggestion. If the workload would keep the student working past midnight, "
         "say to ask a teacher or caregiver about an extension instead of recommending an all-nighter. "
         "Do not do any homework.\n\nTasks:\n" + task_lines
     )

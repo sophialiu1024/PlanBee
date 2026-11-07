@@ -10,7 +10,7 @@ The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the
 
 ## Done in Version 1
 
-- Added a sleep-friendly homework planner with sample tasks.
+- Added a sleep-friendly homework planner that starts empty so students enter their own tasks.
 - Tasks can be added with a due date and importance, then sorted in the planner.
 - Added a single AI planning action that gives concise priorities, breaks, and extension guidance.
 - Added the safety note not to enter personal information.
@@ -21,7 +21,7 @@ The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the
 
 ## Maybe Later
 
-- Add a bedtime and available-time setup screen.
+- Add a preferred evening schedule and available-time setup screen.
 - Add gentle browser reminders and a completed-task state.
 - Add an export for the written competition entry and video demo script.
 - Move saved tasks to a real database.

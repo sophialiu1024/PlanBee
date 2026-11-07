@@ -1,18 +1,12 @@
 (function () {
-  const STORAGE_KEY = "planbee.tasks.v1";
-
-  const sampleTasks = [
-    { id: "sample-science", title: "Finish science lab report", dueDate: "2026-11-08", importance: "High", createdAt: "2026-11-07T16:00:00.000Z" },
-    { id: "sample-math", title: "Complete math practice set", dueDate: "2026-11-09", importance: "Medium", createdAt: "2026-11-07T16:00:00.000Z" },
-    { id: "sample-reading", title: "Read the next history chapter", dueDate: "2026-11-12", importance: "Low", createdAt: "2026-11-07T16:00:00.000Z" }
-  ];
+  const STORAGE_KEY = "planbee.tasks.v2";
 
   function loadTasks() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return Array.isArray(saved) && saved.length ? saved : sampleTasks;
+      return Array.isArray(saved) ? saved : [];
     } catch (error) {
-      return sampleTasks;
+      return [];
     }
   }
 
