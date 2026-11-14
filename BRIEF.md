@@ -6,7 +6,7 @@ People in my class struggle with their sleep schedules because homework keeps th
 
 ## My AI's job
 
-The AI sorts assignments by importance and due date, calculates a practical nightly schedule that ends before midnight, and answers short planning questions. This is more helpful than writing everything by hand because someone might miss something or forget to write it down.
+The AI sorts assignments by due date first and importance second, calculates a practical nightly schedule that ends before midnight, and answers short planning questions. This is more helpful than writing everything by hand because someone might miss something or forget to write it down.
 
 ## What makes PlanBee different
 
@@ -16,7 +16,7 @@ Online planners such as MyStudyLife or Google Calendar may require subscriptions
 
 - Students should enter school tasks only and never personal information.
 - Every assignment needs a due date.
-- Plans must be organized by importance and due date.
+- Plans must be organized by due date first, then importance.
 - PlanBee must never recommend an all-nighter, encourage procrastination, pile too much work into one night, go off topic, or do a student's homework.
 - Breaks are allowed. If the work would run past midnight, PlanBee should suggest asking a teacher or caregiver about a more realistic deadline.
 
@@ -30,7 +30,7 @@ Online planners such as MyStudyLife or Google Calendar may require subscriptions
 ## AI instructions
 
 - The main planning action is started after students add their own assignments and due dates and press “Make my plan.”
-- The AI should put the most important and urgent work first, include realistic breaks, and avoid scheduling beyond midnight.
+- The AI should put the soonest due work first, use importance to break ties, include realistic breaks, and avoid scheduling beyond midnight.
 - If the workload cannot fit, the AI should say which work may need an extension or adult help.
 - The AI talks to late elementary through high school students. It sounds cheerful, polite, focused, and helpful without jokes or unrelated conversation.
 - The AI should not do homework for students.

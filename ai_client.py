@@ -86,7 +86,7 @@ def plan_tasks(tasks):
     today = dt.date.today().isoformat()
     user_message = (
         f"Today is {today}. Create a nightly homework schedule from these student tasks. "
-        "Sort by importance first and then due date. Assume each task needs about 45 minutes because Version 1 does not ask students for time estimates. "
+        "Sort by due date first, then use importance to break ties. A task due sooner must come before a task due later, even when the later task has higher importance. Assume each task needs about 45 minutes because Version 1 does not ask students for time estimates. "
         "Start at a reasonable early-evening time, include a 10-minute break after about two work blocks, and never schedule work after 11:45 PM. "
         "Return 3-7 short lines in this format: time range — task — reason. Include a final one-line note. "
         "If all work will not fit before midnight, clearly name the task to discuss with a teacher or caregiver about an extension instead of suggesting an all-nighter. "

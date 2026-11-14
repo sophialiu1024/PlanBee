@@ -13,7 +13,7 @@ After each save point, push it to GitHub.
 ## Done in Version 1
 
 - Added the main flow: enter assignments, then ask the AI for a short nightly schedule that stays before midnight.
-- Added required due dates and sorting by importance first, then due date.
+- Added required due dates and sorting by due date first, then importance.
 - Added a small made-up sample list for demonstrating the app; students can remove or replace those tasks.
 - Added a pop-up AI chatbox for short, safe planning questions.
 - Added the safety reminder not to enter names or other personal information.

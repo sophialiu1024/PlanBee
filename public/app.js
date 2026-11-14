@@ -25,7 +25,7 @@
   }
 
   function sortedTasks() {
-    return [...tasks].sort((a, b) => priorityOrder[a.importance] - priorityOrder[b.importance] || a.dueDate.localeCompare(b.dueDate));
+    return [...tasks].sort((a, b) => a.dueDate.localeCompare(b.dueDate) || priorityOrder[a.importance] - priorityOrder[b.importance]);
   }
 
   function renderTasks() {
