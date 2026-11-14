@@ -19,6 +19,7 @@ After each save point, push it to GitHub.
 - Added the safety reminder not to enter names or other personal information.
 - Added browser localStorage saving in `public/storage.js`.
 - Added a session fallback so the planner still works when a local preview blocks browser storage.
+- Added no-cache headers so the browser does not keep an older page without the AI chat control.
 - Saves on this computer only for now.
 - Kept the OpenAI key on the server in `.env` and the API request in `ai_client.py`.
 - Added a warm honey-yellow design with Google Fonts and Material Symbols.

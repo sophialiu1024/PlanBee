@@ -51,6 +51,11 @@ class PlanBeeHandler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def end_headers(self):
+        # Always serve the current local files so an older preview cannot hide new controls.
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def log_message(self, format, *args):
         if self.path.startswith("/api/"):
             return
