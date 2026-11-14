@@ -1,4 +1,5 @@
 (function () {
+  const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000" : "";
   const taskList = document.querySelector("#task-list");
   const dialog = document.querySelector("#planner-dialog");
   const form = document.querySelector("#task-form");
@@ -125,7 +126,7 @@
     chatSend.disabled = true;
     chatSend.innerHTML = '<span class="material-symbols-outlined">progress_activity</span> Thinking…';
     try {
-      const response = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, history: chatHistory, tasks }) });
+      const response = await fetch(`${API_BASE}/api/chat`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, history: chatHistory, tasks }) });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "The AI could not answer.");
       chatHistory.push({ role: "assistant", content: payload.answer });
@@ -150,7 +151,7 @@
     button.textContent = "Thinking…";
     status.textContent = "PlanBee is organizing your tasks…";
     try {
-      const response = await fetch("/api/plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tasks }) });
+      const response = await fetch(`${API_BASE}/api/plan`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tasks }) });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "The AI could not answer.");
       closeDialog();

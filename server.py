@@ -42,12 +42,26 @@ class PlanBeeHandler(SimpleHTTPRequestHandler):
         except (ValueError, json.JSONDecodeError):
             self._send_json(400, {"error": "Please add at least one task with a due date."})
 
+    def do_OPTIONS(self):
+        if self.path.startswith("/api/"):
+            self.send_response(204)
+            self._send_cors_headers()
+            self.end_headers()
+            return
+        self.send_error(404)
+
+    def _send_cors_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+
     def _send_json(self, status, payload):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self._send_cors_headers()
         self.end_headers()
         self.wfile.write(body)
 
