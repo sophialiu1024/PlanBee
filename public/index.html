@@ -50,6 +50,23 @@
         </aside>
       </section>
 
+      <section class="chat-panel panel" id="chat-panel">
+        <div class="chat-heading">
+          <div><p class="section-label">TALK IT THROUGH</p><h2>Ask the AI a question.</h2></div>
+          <span class="chat-badge"><span class="material-symbols-outlined">forum</span> Open chat</span>
+        </div>
+        <p class="chat-intro">You can ask what to do first, how to break a task into smaller steps, or what to do when the list feels too large. PlanBee will help you plan, but it will not do your homework.</p>
+        <div class="chat-messages" id="chat-messages" aria-live="polite">
+          <div class="chat-message assistant-message"><span class="message-icon material-symbols-outlined">hive</span><p>What would you like help thinking through?</p></div>
+        </div>
+        <form class="chat-form" id="chat-form">
+          <label class="sr-only" for="chat-input">Ask PlanBee a question</label>
+          <textarea id="chat-input" maxlength="600" rows="2" placeholder="Ask a planning question..." required></textarea>
+          <button class="primary-button chat-send" id="chat-send" type="submit"><span class="material-symbols-outlined">send</span> Send</button>
+        </form>
+        <p class="chat-note"><span class="material-symbols-outlined">lock</span> Please leave out names and other personal information.</p>
+      </section>
+
       <section class="ai-result-section" id="ai-result-section" hidden>
         <div class="result-heading"><div><p class="section-label">A PLAN FOR TONIGHT</p><h2>Here is a way to work through the list.</h2></div><span class="ai-badge"><span class="material-symbols-outlined">auto_awesome</span> AI PLAN</span></div>
         <div class="result-card" id="ai-result" aria-live="polite"></div>

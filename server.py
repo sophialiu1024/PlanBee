@@ -2,7 +2,7 @@ import json
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from ai_client import plan_tasks
+from ai_client import chat_with_ai, plan_tasks
 
 
 ROOT = Path(__file__).parent
@@ -14,16 +14,25 @@ class PlanBeeHandler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(PUBLIC), **kwargs)
 
     def do_POST(self):
-        if self.path != "/api/plan":
+        if self.path not in {"/api/plan", "/api/chat"}:
             self.send_error(404)
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
             tasks = payload.get("tasks", [])
-            if not isinstance(tasks, list) or not tasks:
-                raise ValueError("No tasks provided")
-            answer = plan_tasks(tasks)
+            if not isinstance(tasks, list):
+                raise ValueError("Tasks must be a list")
+            if self.path == "/api/chat":
+                message = payload.get("message", "").strip()
+                history = payload.get("history", [])
+                if not message or not isinstance(history, list):
+                    raise ValueError("A student question is required")
+                answer = chat_with_ai(message, history, tasks)
+            else:
+                if not tasks:
+                    raise ValueError("No tasks provided")
+                answer = plan_tasks(tasks)
             self._send_json(200, {"answer": answer})
         except RuntimeError as error:
             if str(error) == "missing_key":

@@ -84,3 +84,57 @@ def plan_tasks(tasks):
     if not text:
         raise RuntimeError("api_unavailable")
     return text
+
+
+def chat_with_ai(message, history, tasks):
+    env = _read_env_file()
+    api_key = env.get("OPENAI_API_KEY")
+    if not api_key or api_key == "paste-your-key-here":
+        raise RuntimeError("missing_key")
+
+    brief = (ROOT / "BRIEF.md").read_text(encoding="utf-8")
+    task_lines = "\n".join(
+        f"- {task.get('title', '').strip()} | due {task.get('dueDate', 'no date')} | importance {task.get('importance', 'Medium')}"
+        for task in tasks[:12]
+        if isinstance(task, dict)
+    ) or "No tasks have been added yet."
+    input_items = []
+    for item in history[-12:]:
+        if not isinstance(item, dict) or item.get("role") not in {"user", "assistant"}:
+            continue
+        content = item.get("content")
+        if isinstance(content, str) and content.strip():
+            input_items.append({"role": item["role"], "content": content.strip()[:2000]})
+    if not input_items or input_items[-1]["role"] != "user":
+        raise ValueError("A student question is required.")
+    input_items[-1]["content"] = (
+        "The student's current tasks are:\n" + task_lines + "\n\n"
+        "Answer the student's latest question:\n" + input_items[-1]["content"]
+    )
+    payload = json.dumps(
+        {
+            "model": _model_from_notes(),
+            "instructions": brief,
+            "input": input_items,
+            "max_output_tokens": 500,
+        }
+    ).encode("utf-8")
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/responses",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=45) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
+        raise RuntimeError("api_unavailable") from error
+
+    text = _answer_text(result)
+    if not text:
+        raise RuntimeError("api_unavailable")
+    return text

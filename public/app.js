@@ -10,9 +10,14 @@
   const result = document.querySelector("#ai-result");
   const priorityOrder = { High: 0, Medium: 1, Low: 2 };
   const reorderToggle = document.querySelector("#toggle-reorder");
+  const chatForm = document.querySelector("#chat-form");
+  const chatInput = document.querySelector("#chat-input");
+  const chatMessages = document.querySelector("#chat-messages");
+  const chatSend = document.querySelector("#chat-send");
 
   let tasks = PlanBeeStorage.loadTasks();
   let manualOrder = false;
+  let chatHistory = [];
 
   function formatDate(date) {
     if (!date) return "No due date";
@@ -77,6 +82,20 @@
     resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  function addChatMessage(role, text) {
+    const message = document.createElement("div");
+    message.className = `chat-message ${role === "user" ? "user-message" : "assistant-message"}`;
+    if (role === "assistant") {
+      message.innerHTML = '<span class="message-icon material-symbols-outlined">hive</span><p></p>';
+      message.querySelector("p").textContent = text;
+    } else {
+      message.innerHTML = "<p></p>";
+      message.querySelector("p").textContent = text;
+    }
+    chatMessages.appendChild(message);
+    message.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
   document.querySelector("#open-planner").addEventListener("click", openDialog);
   document.querySelector("#open-add-task").addEventListener("click", openDialog);
   document.querySelector(".close-button").addEventListener("click", closeDialog);
@@ -96,6 +115,32 @@
     titleInput.value = "";
     status.textContent = "Added to your plan. Add another, or organize the list with AI.";
     titleInput.focus();
+  });
+
+  chatForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const message = chatInput.value.trim();
+    if (!message) return;
+    chatHistory.push({ role: "user", content: message });
+    addChatMessage("user", message);
+    chatInput.value = "";
+    chatInput.disabled = true;
+    chatSend.disabled = true;
+    chatSend.innerHTML = '<span class="material-symbols-outlined">progress_activity</span> Thinking…';
+    try {
+      const response = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, history: chatHistory, tasks }) });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "The AI could not answer.");
+      chatHistory.push({ role: "assistant", content: payload.answer });
+      addChatMessage("assistant", payload.answer);
+    } catch (error) {
+      addChatMessage("assistant", error.message || "Please check your key and internet connection.");
+    } finally {
+      chatInput.disabled = false;
+      chatSend.disabled = false;
+      chatSend.innerHTML = '<span class="material-symbols-outlined">send</span> Send';
+      chatInput.focus();
+    }
   });
 
   document.querySelector("#ask-ai").addEventListener("click", async () => {
