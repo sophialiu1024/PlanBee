@@ -1,5 +1,6 @@
 (function () {
   const STORAGE_KEY = "planbee.tasks.v2";
+  let memoryTasks = null;
 
   function sampleTasks() {
     const today = new Date();
@@ -24,12 +25,19 @@
       const saved = JSON.parse(raw);
       return Array.isArray(saved) ? saved : [];
     } catch (error) {
-      return [];
+      if (Array.isArray(memoryTasks)) return [...memoryTasks];
+      memoryTasks = sampleTasks();
+      return [...memoryTasks];
     }
   }
 
   function saveTasks(tasks) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    memoryTasks = [...tasks];
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    } catch (error) {
+      // Some local preview pages block browser storage. Keep this session usable.
+    }
   }
 
   function addTask(task) {
