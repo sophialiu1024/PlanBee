@@ -8,6 +8,8 @@
 
 The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the browser never receives it.
 
+After each save point, push it to GitHub.
+
 ## Done in Version 1
 
 - Added a sleep-friendly homework planner that starts empty so students enter their own tasks.
