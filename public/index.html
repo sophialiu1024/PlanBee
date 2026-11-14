@@ -18,9 +18,9 @@
     <main class="shell">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">A CALMER SCHOOL NIGHT STARTS WITH A PLAN</p>
-          <h1>Finish what matters,<br /><em>then let your evening rest.</em></h1>
-          <p class="hero-text">When homework and phone time start pushing the evening later, a small plan can make the night feel more manageable.</p>
+          <p class="eyebrow">A CLEARER SCHOOL NIGHT STARTS WITH A PLAN</p>
+          <h1>Know what comes first,<br /><em>and make room for rest.</em></h1>
+          <p class="hero-text">Add your assignments and due dates. PlanBee turns the list into a practical order and a schedule that stays before midnight.</p>
           <div class="hero-actions"><button class="primary-button" id="open-planner" type="button"><span class="material-symbols-outlined">auto_awesome</span> Make my plan</button><button class="secondary-button chat-launch" id="open-chat" type="button"><span class="material-symbols-outlined">forum</span> Ask the AI</button></div>
           <p class="privacy-note">Please enter school tasks only, and leave out names and other personal information.</p>
         </div>
@@ -34,8 +34,8 @@
       <section class="dashboard-grid">
         <div class="planner-panel panel">
           <div class="panel-heading">
-            <div><p class="section-label">YOUR PLAN FOR TONIGHT</p><h2>Today’s tasks</h2></div>
-            <div class="panel-actions"><button class="reorder-toggle" id="toggle-reorder" type="button" aria-pressed="false"><span class="material-symbols-outlined">swap_vert</span> Rearrange</button><span class="saved-pill"><span class="green-dot"></span> Saved locally</span></div>
+            <div><p class="section-label">YOUR ASSIGNMENTS</p><h2>What needs your attention</h2><p class="sort-note">Sorted by importance, then due date.</p></div>
+            <span class="saved-pill"><span class="green-dot"></span> Saved locally</span>
           </div>
           <div id="task-list" class="task-list" aria-live="polite"></div>
           <button class="add-link" id="open-add-task" type="button"><span class="material-symbols-outlined">add</span> Add a task</button>
@@ -57,7 +57,7 @@
           <div><p class="section-label">TALK IT THROUGH</p><h2>Ask the AI a question.</h2></div>
           <span class="chat-badge"><span class="material-symbols-outlined">forum</span> Open chat</span>
         </div>
-        <p class="chat-intro">You can ask what to do first, how to break a task into smaller steps, or what to do when the list feels too large. PlanBee will help you plan, but it will not do your homework.</p>
+        <p class="chat-intro">Ask what to do first, how to break a task into smaller steps, or what to do when the list feels too large. PlanBee will help you plan, but it will not do your homework.</p>
         <div class="chat-messages" id="chat-messages" aria-live="polite">
           <div class="chat-message assistant-message"><span class="message-icon material-symbols-outlined">hive</span><p>What would you like help thinking through?</p></div>
         </div>
@@ -71,7 +71,7 @@
       </dialog>
 
       <section class="ai-result-section" id="ai-result-section" hidden>
-        <div class="result-heading"><div><p class="section-label">A PLAN FOR TONIGHT</p><h2>Here is a way to work through the list.</h2></div><span class="ai-badge"><span class="material-symbols-outlined">auto_awesome</span> AI PLAN</span></div>
+        <div class="result-heading"><div><p class="section-label">A NIGHTLY SCHEDULE</p><h2>Here is a practical order for the evening.</h2></div><span class="ai-badge"><span class="material-symbols-outlined">auto_awesome</span> AI PLAN</span></div>
         <div class="result-card" id="ai-result" aria-live="polite"></div>
       </section>
 
@@ -83,7 +83,7 @@
         <button class="close-button material-symbols-outlined" type="button" aria-label="Close planner">close</button>
         <p class="section-label">START WITH TONIGHT’S TASKS</p>
         <h2>What’s on your plate?</h2>
-        <p class="dialog-help">Add each school task with its due date, and then ask for help choosing what to do first.</p>
+        <p class="dialog-help">Add each school task with its due date. Add your own work, or remove the made-up demo tasks before making a plan.</p>
         <label for="task-title">Task</label>
         <input id="task-title" name="title" type="text" maxlength="100" placeholder="Type a school task" required />
         <div class="form-row">

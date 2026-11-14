@@ -9,7 +9,6 @@
   const resultSection = document.querySelector("#ai-result-section");
   const result = document.querySelector("#ai-result");
   const priorityOrder = { High: 0, Medium: 1, Low: 2 };
-  const reorderToggle = document.querySelector("#toggle-reorder");
   const chatForm = document.querySelector("#chat-form");
   const chatInput = document.querySelector("#chat-input");
   const chatMessages = document.querySelector("#chat-messages");
@@ -17,7 +16,6 @@
   const chatDialog = document.querySelector("#chat-dialog");
 
   let tasks = PlanBeeStorage.loadTasks();
-  let manualOrder = false;
   let chatHistory = [];
 
   function formatDate(date) {
@@ -26,27 +24,21 @@
   }
 
   function sortedTasks() {
-    return manualOrder ? [...tasks] : [...tasks].sort((a, b) => a.dueDate.localeCompare(b.dueDate) || priorityOrder[a.importance] - priorityOrder[b.importance]);
-  }
-
-  function moveTask(id, amount) {
-    const index = tasks.findIndex((task) => task.id === id);
-    const nextIndex = index + amount;
-    if (index < 0 || nextIndex < 0 || nextIndex >= tasks.length) return;
-    [tasks[index], tasks[nextIndex]] = [tasks[nextIndex], tasks[index]];
-    PlanBeeStorage.saveTasks(tasks);
-    renderTasks();
+    return [...tasks].sort((a, b) => priorityOrder[a.importance] - priorityOrder[b.importance] || a.dueDate.localeCompare(b.dueDate));
   }
 
   function renderTasks() {
     taskList.innerHTML = "";
+    if (!tasks.length) {
+      taskList.innerHTML = '<p class="empty-state">No assignments yet. Add one to build your plan.</p>';
+      return;
+    }
     sortedTasks().forEach((task) => {
       const card = document.createElement("article");
       card.className = "task-card";
-      card.innerHTML = `<div class="task-check" aria-hidden="true"></div><div class="task-info"><h3></h3><p></p></div><span class="priority priority-${task.importance.toLowerCase()}">${task.importance}</span><div class="task-actions"><div class="reorder-controls" ${manualOrder ? "" : "hidden"}><button class="move-task material-symbols-outlined" data-direction="-1" type="button" aria-label="Move task up">arrow_upward</button><button class="move-task material-symbols-outlined" data-direction="1" type="button" aria-label="Move task down">arrow_downward</button></div><button class="remove-task material-symbols-outlined" type="button" aria-label="Remove task">close</button></div>`;
+      card.innerHTML = `<div class="task-check" aria-hidden="true"></div><div class="task-info"><h3></h3><p></p></div><span class="priority priority-${task.importance.toLowerCase()}">${task.importance}</span><button class="remove-task material-symbols-outlined" type="button" aria-label="Remove task">close</button>`;
       card.querySelector("h3").textContent = task.title;
-      card.querySelector("p").textContent = `Due ${formatDate(task.dueDate)}`;
-      card.querySelectorAll(".move-task").forEach((button) => button.addEventListener("click", () => moveTask(task.id, Number(button.dataset.direction))));
+      card.querySelector("p").textContent = `${task.sample ? "Demo task · " : ""}Due ${formatDate(task.dueDate)}`;
       card.querySelector(".remove-task").addEventListener("click", () => {
         tasks = tasks.filter((item) => item.id !== task.id);
         PlanBeeStorage.saveTasks(tasks);
@@ -111,13 +103,6 @@
   document.querySelector(".close-button").addEventListener("click", closeDialog);
   document.querySelector("#open-chat").addEventListener("click", openChatDialog);
   document.querySelector("#close-chat").addEventListener("click", closeChatDialog);
-  reorderToggle.addEventListener("click", () => {
-    manualOrder = !manualOrder;
-    reorderToggle.setAttribute("aria-pressed", String(manualOrder));
-    reorderToggle.innerHTML = manualOrder ? '<span class="material-symbols-outlined">done</span> Done rearranging' : '<span class="material-symbols-outlined">swap_vert</span> Rearrange';
-    renderTasks();
-  });
-
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     if (!titleInput.value.trim() || !dateInput.value) return;

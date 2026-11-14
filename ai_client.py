@@ -1,5 +1,6 @@
 """The only file that sends PlanBee messages to OpenAI."""
 
+import datetime as dt
 import json
 import re
 import urllib.error
@@ -39,30 +40,17 @@ def _answer_text(response):
     return "\n".join(parts).strip()
 
 
-def plan_tasks(tasks):
-    env = _read_env_file()
-    api_key = env.get("OPENAI_API_KEY")
+def _call_openai(instructions, input_items):
+    api_key = _read_env_file().get("OPENAI_API_KEY")
     if not api_key or api_key == "paste-your-key-here":
         raise RuntimeError("missing_key")
 
-    brief = (ROOT / "BRIEF.md").read_text(encoding="utf-8")
-    task_lines = "\n".join(
-        f"- {task.get('title', '').strip()} | due {task.get('dueDate', 'no date')} | importance {task.get('importance', 'Medium')}"
-        for task in tasks[:12]
-    )
-    user_message = (
-        "Organize these student tasks into a short, practical plan. "
-        "Return 3-6 concise bullets. Put the most urgent and important work first. "
-        "Include one realistic break suggestion. If the workload would keep the student working past midnight, "
-        "say to ask a teacher or caregiver about an extension instead of recommending an all-nighter. "
-        "Do not do any homework.\n\nTasks:\n" + task_lines
-    )
     payload = json.dumps(
         {
             "model": _model_from_notes(),
-            "instructions": brief,
-            "input": user_message,
-            "max_output_tokens": 500,
+            "instructions": instructions,
+            "input": input_items,
+            "max_output_tokens": 700,
         }
     ).encode("utf-8")
     request = urllib.request.Request(
@@ -86,18 +74,31 @@ def plan_tasks(tasks):
     return text
 
 
-def chat_with_ai(message, history, tasks):
-    env = _read_env_file()
-    api_key = env.get("OPENAI_API_KEY")
-    if not api_key or api_key == "paste-your-key-here":
-        raise RuntimeError("missing_key")
-
-    brief = (ROOT / "BRIEF.md").read_text(encoding="utf-8")
-    task_lines = "\n".join(
+def _task_lines(tasks):
+    return "\n".join(
         f"- {task.get('title', '').strip()} | due {task.get('dueDate', 'no date')} | importance {task.get('importance', 'Medium')}"
         for task in tasks[:12]
-        if isinstance(task, dict)
+        if isinstance(task, dict) and task.get("title")
     ) or "No tasks have been added yet."
+
+
+def plan_tasks(tasks):
+    today = dt.date.today().isoformat()
+    user_message = (
+        f"Today is {today}. Create a nightly homework schedule from these student tasks. "
+        "Sort by importance first and then due date. Assume each task needs about 45 minutes because Version 1 does not ask students for time estimates. "
+        "Start at a reasonable early-evening time, include a 10-minute break after about two work blocks, and never schedule work after 11:45 PM. "
+        "Return 3-7 short lines in this format: time range — task — reason. Include a final one-line note. "
+        "If all work will not fit before midnight, clearly name the task to discuss with a teacher or caregiver about an extension instead of suggesting an all-nighter. "
+        "Do not do any homework. Do not invent assignments or due dates.\n\nTasks:\n" + _task_lines(tasks)
+    )
+    return _call_openai(
+        (ROOT / "BRIEF.md").read_text(encoding="utf-8"),
+        user_message,
+    )
+
+
+def chat_with_ai(message, history, tasks):
     input_items = []
     for item in history[-12:]:
         if not isinstance(item, dict) or item.get("role") not in {"user", "assistant"}:
@@ -107,34 +108,13 @@ def chat_with_ai(message, history, tasks):
             input_items.append({"role": item["role"], "content": content.strip()[:2000]})
     if not input_items or input_items[-1]["role"] != "user":
         raise ValueError("A student question is required.")
-    input_items[-1]["content"] = (
-        "The student's current tasks are:\n" + task_lines + "\n\n"
-        "Answer the student's latest question:\n" + input_items[-1]["content"]
-    )
-    payload = json.dumps(
-        {
-            "model": _model_from_notes(),
-            "instructions": brief,
-            "input": input_items,
-            "max_output_tokens": 500,
-        }
-    ).encode("utf-8")
-    request = urllib.request.Request(
-        "https://api.openai.com/v1/responses",
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=45) as response:
-            result = json.loads(response.read().decode("utf-8"))
-    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
-        raise RuntimeError("api_unavailable") from error
 
-    text = _answer_text(result)
-    if not text:
-        raise RuntimeError("api_unavailable")
-    return text
+    task_context = _task_lines(tasks)
+    input_items[-1]["content"] = (
+        "The student's current assignments are:\n" + task_context + "\n\n"
+        "Answer the student's latest planning question:\n" + input_items[-1]["content"]
+    )
+    return _call_openai(
+        (ROOT / "BRIEF.md").read_text(encoding="utf-8"),
+        input_items,
+    )

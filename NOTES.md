@@ -12,23 +12,27 @@ After each save point, push it to GitHub.
 
 ## Done in Version 1
 
-- Added a sleep-friendly homework planner that starts empty so students enter their own tasks.
-- Tasks can be added with a due date and importance, then sorted in the planner.
-- Added an AI planning action plus a chatbox for questions about prioritizing, breaking down work, and handling an overloaded list.
-- The chatbox opens as a pop-up from the main screen.
-- Added the safety note not to enter personal information.
-- Added local browser saving.
+- Added the main flow: enter assignments, then ask the AI for a short nightly schedule that stays before midnight.
+- Added required due dates and sorting by importance first, then due date.
+- Added a small made-up sample list for demonstrating the app; students can remove or replace those tasks.
+- Added a pop-up AI chatbox for short, safe planning questions.
+- Added the safety reminder not to enter names or other personal information.
+- Added browser localStorage saving in `public/storage.js`.
 - Saves on this computer only for now.
-- Added a warm honey-yellow theme with Gluten, Bpmf Huninn, and Google Material Symbols.
-- Added an optional Rearrange mode so students can move tasks up or down and keep that order locally.
-- The current API key is being rejected by OpenAI, so replace the key in `.env` locally before using the chat.
+- Kept the OpenAI key on the server in `.env` and the API request in `ai_client.py`.
+- Added a warm honey-yellow design with Google Fonts and Material Symbols.
+- The local AI endpoint is wired and shows a friendly error, but live AI testing is waiting for a working key in `.env`.
 
 ## Maybe Later
 
-- Add a preferred evening schedule and available-time setup screen.
-- Add gentle browser reminders and a completed-task state.
-- Add an export for the written competition entry and video demo script.
-- Move saved tasks to a real database.
+- The user can see a reminder not to type personal information.
+- The user can set their bedtime so the plan never goes past it.
+- The user can edit how long they think each task will take.
+- The user can check off finished tasks and watch the plan update.
+- The user can see when the AI suggests asking a teacher for an extension.
+- The user can get a quick time management tip for their busiest day.
+- The user can set a phone-free time before bed in their plan.
+- The user can print or save their weekly planner.
 
 ## Next
 
