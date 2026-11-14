@@ -14,6 +14,7 @@
   const chatInput = document.querySelector("#chat-input");
   const chatMessages = document.querySelector("#chat-messages");
   const chatSend = document.querySelector("#chat-send");
+  const chatDialog = document.querySelector("#chat-dialog");
 
   let tasks = PlanBeeStorage.loadTasks();
   let manualOrder = false;
@@ -96,9 +97,20 @@
     message.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
+  function openChatDialog() {
+    if (!chatDialog.open) chatDialog.showModal();
+    chatInput.focus();
+  }
+
+  function closeChatDialog() {
+    if (chatDialog.open) chatDialog.close();
+  }
+
   document.querySelector("#open-planner").addEventListener("click", openDialog);
   document.querySelector("#open-add-task").addEventListener("click", openDialog);
   document.querySelector(".close-button").addEventListener("click", closeDialog);
+  document.querySelector("#open-chat").addEventListener("click", openChatDialog);
+  document.querySelector("#close-chat").addEventListener("click", closeChatDialog);
   reorderToggle.addEventListener("click", () => {
     manualOrder = !manualOrder;
     reorderToggle.setAttribute("aria-pressed", String(manualOrder));

@@ -13,6 +13,7 @@ The AI model is `gpt-5.6-luna`. The server reads the OpenAI key from `.env`; the
 - Added a sleep-friendly homework planner that starts empty so students enter their own tasks.
 - Tasks can be added with a due date and importance, then sorted in the planner.
 - Added an AI planning action plus a chatbox for questions about prioritizing, breaking down work, and handling an overloaded list.
+- The chatbox opens as a pop-up from the main screen.
 - Added the safety note not to enter personal information.
 - Added local browser saving.
 - Saves on this computer only for now.
