@@ -91,7 +91,14 @@
   }
 
   function openChatDialog() {
-    if (!chatDialog.open) chatDialog.showModal();
+    if (!chatDialog.open) {
+      try {
+        if (typeof chatDialog.showModal === "function") chatDialog.showModal();
+        else chatDialog.setAttribute("open", "");
+      } catch (error) {
+        chatDialog.setAttribute("open", "");
+      }
+    }
     chatInput.focus();
   }
 
